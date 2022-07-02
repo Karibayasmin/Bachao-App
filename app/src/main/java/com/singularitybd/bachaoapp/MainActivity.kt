@@ -55,11 +55,11 @@ class MainActivity : AppCompatActivity() {
         }
 
         textView_stop_recording.setOnClickListener {
-            pauseRecording()
+            stopRecording()
         }
     }
 
-    fun pauseRecording() {
+    fun stopRecording() {
         mRecorder?.stop()
 
         mRecorder?.release()
@@ -104,6 +104,7 @@ class MainActivity : AppCompatActivity() {
 
             override fun onFinish() {
                 textView_timer.text = "0:00"
+                stopRecording()
             }
         }.start()
     }
@@ -129,10 +130,9 @@ class MainActivity : AppCompatActivity() {
         }
     }
 
-    /*private fun startRecording() {
-        if(checkPermissions()){
-            mFileName = Environment.getExternalStorageDirectory().getAbsolutePath()
-            mFileName += "/AudioRecording.3gp"
+    private fun startRecording() {
+        if (checkPermissions()) {
+            mFileName = getExternalCacheDir()?.getAbsolutePath() + "/audiorecordtest.3gp"
 
             mRecorder = MediaRecorder()
 
@@ -143,37 +143,9 @@ class MainActivity : AppCompatActivity() {
             mRecorder?.setAudioEncoder(MediaRecorder.AudioEncoder.AMR_NB)
 
             mRecorder?.setOutputFile(mFileName)
-
             try {
                 mRecorder?.prepare()
-            }catch (e : IOException){
-                Log.e("TAG", "start playing prepare() failed ${e.message}")
-            }
-
-            mRecorder?.start()
-            textView_status.text = getString(R.string.recording_started)
-
-        }else{
-            RequestPermissions()
-        }
-    }*/
-
-    private fun startRecording() {
-        if (checkPermissions()) {
-            mFileName = getExternalCacheDir()?.getAbsolutePath() + "/audiorecordtest.3gp"
-
-            mRecorder = MediaRecorder()
-
-            mRecorder!!.setAudioSource(MediaRecorder.AudioSource.MIC)
-
-            mRecorder!!.setOutputFormat(MediaRecorder.OutputFormat.THREE_GPP)
-
-            mRecorder!!.setAudioEncoder(MediaRecorder.AudioEncoder.AMR_NB)
-
-            mRecorder!!.setOutputFile(mFileName)
-            try {
-                mRecorder!!.prepare()
-                mRecorder!!.start()
+                mRecorder?.start()
                 textView_status.text = "Recording Started"
             } catch (e: IOException) {
                 Log.e("TAG", "enter here prepare() failed ${e.message}")
