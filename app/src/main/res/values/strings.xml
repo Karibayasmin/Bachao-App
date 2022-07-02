@@ -1,3 +1,16 @@
 <resources>
     <string name="app_name">BachaoApp</string>
+
+    <!--Common String-->
+
+    <!--MainActivity-->
+    <string name="timer">timer</string>
+    <string name="status">status</string>
+    <string name="start_recording">start recording</string>
+    <string name="stop_recording">stop recording</string>
+    <string name="play_recording">play recording</string>
+    <string name="stop_playing">stop playing</string>
+    <string name="recording_started">Recording Started</string>
+    <string name="recording_play">Recording Started Playing</string>
+
 </resources>
