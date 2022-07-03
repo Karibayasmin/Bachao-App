@@ -70,4 +70,7 @@ dependencies {
     implementation 'io.reactivex:rxjava:1.1.6'
     implementation 'junit:junit:4.12'
 
+    //EventBus
+    implementation 'org.greenrobot:eventbus:3.1.1'
+
 }

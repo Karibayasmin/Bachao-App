@@ -1,4 +1,4 @@
-package com.singularitybd.bachaoapp
+package com.singularitybd.bachaoapp.activity
 
 import android.Manifest.permission.RECORD_AUDIO
 import android.Manifest.permission.WRITE_EXTERNAL_STORAGE
@@ -19,8 +19,16 @@ import androidx.core.content.ContextCompat
 import androidx.databinding.DataBindingUtil
 import com.afollestad.materialdialogs.MaterialDialog.Builder
 import com.afollestad.materialdialogs.Theme
+import com.singularitybd.bachaoapp.MyService
+import com.singularitybd.bachaoapp.R
 import com.singularitybd.bachaoapp.databinding.ActivityMainBinding
+import com.singularitybd.bachaoapp.model.EventSpeechRecognise
+import com.singularitybd.bachaoapp.preference.PreferenceUtil
+import com.singularitybd.bachaoapp.utils.Constants
 import kotlinx.android.synthetic.main.activity_main.*
+import org.greenrobot.eventbus.EventBus
+import org.greenrobot.eventbus.Subscribe
+import org.greenrobot.eventbus.ThreadMode
 import java.io.IOException
 import java.util.*
 
@@ -39,11 +47,15 @@ class MainActivity : AppCompatActivity() {
 
     private var mPlayer: MediaPlayer? = null
 
+    var recognisedTime : Int = 0
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         //setContentView(R.layout.activity_main)
 
-        val binding = DataBindingUtil.setContentView<ActivityMainBinding>(this, R.layout.activity_main)
+        val binding = DataBindingUtil.setContentView<ActivityMainBinding>(this,
+            R.layout.activity_main
+        )
 
         binding.lifecycleOwner = this
 
@@ -52,6 +64,7 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun initView(binding: ActivityMainBinding) {
+        recognisedTime = 0
         enableAutoStart()
         if (checkServiceRunning()) {
             Log.e("enter", "enter 1")
@@ -77,21 +90,60 @@ class MainActivity : AppCompatActivity() {
             }
         }
 
-        //setTimer()
-
-        //RequestPermissions()
-        //startRecording()
+        RequestPermissions()
 
         //matchSpeechToText()
 
-        /*textView_play_recording.setOnClickListener {
+        textView_play_recording.setOnClickListener {
             playAudio()
 
         }
 
         textView_stop_recording.setOnClickListener {
             stopRecording()
-        }*/
+        }
+    }
+
+    private fun fetchRecognisedWord() {
+        if(textView_recognised_word.text.toString().toLowerCase() == "hello"){
+            recognisedTime++
+
+            Log.e("recognisedTime","$recognisedTime")
+
+            textView_recognised_word_times.text = "($recognisedTime)"
+
+            if(recognisedTime == 2){
+                setTimer()
+                startRecording()
+
+                recognisedTime = 0
+                textView_recognised_word.text = ""
+            }
+        }
+    }
+
+    @Subscribe(threadMode = ThreadMode.MAIN)
+    fun speechRecognisedEvent(event: EventSpeechRecognise) {
+        if (event.isSpeechRecognised == true) {
+            Log.e("eventBus", "entered MainActivity" + event.recognisedWord)
+            textView_recognised_word.text = event.recognisedWord
+
+            fetchRecognisedWord()
+        }
+    }
+
+    override fun onStart() {
+        super.onStart()
+        if(!EventBus.getDefault().isRegistered(this)){
+            EventBus.getDefault().register(this)
+        }
+    }
+
+    override fun onStop() {
+        super.onStop()
+        if(!EventBus.getDefault().isRegistered(this)){
+            EventBus.getDefault().unregister(this)
+        }
     }
 
     private fun enableAutoStart() {
@@ -132,44 +184,6 @@ class MainActivity : AppCompatActivity() {
             }
         }
         return false
-    }
-
-   /* private fun matchSpeechToText() {
-        // on below line we are calling speech recognizer intent.
-        val intent = Intent(RecognizerIntent.ACTION_RECOGNIZE_SPEECH)
-
-        // on below line we are passing language model
-        // and model free form in our intent
-        intent.putExtra(
-            RecognizerIntent.EXTRA_LANGUAGE_MODEL,
-            RecognizerIntent.LANGUAGE_MODEL_FREE_FORM
-        )
-
-        // on below line we are passing our
-        // language as a default language.
-        intent.putExtra(
-            RecognizerIntent.EXTRA_LANGUAGE,
-            Locale.getDefault()
-        )
-
-        // on below line we are specifying a prompt
-        // message as speak to text on below line.
-        intent.putExtra(RecognizerIntent.EXTRA_PROMPT, "Speak to text")
-
-        // on below line we are specifying a try catch block.
-        // in this block we are calling a start activity
-        // for result method and passing our result code.
-        try {
-            startActivityForResult(intent, REQUEST_CODE_SPEECH_INPUT)
-        } catch (e: Exception) {
-            // on below line we are displaying error message in toast
-            Toast
-                .makeText(
-                    this@MainActivity, " " + e.message,
-                    Toast.LENGTH_SHORT
-                )
-                .show()
-        }
     }
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
@@ -237,7 +251,7 @@ class MainActivity : AppCompatActivity() {
 
                 textView_timer.text = "$passedMinutes : $passedSeconds"
 
-                matchSpeechToText()
+                //matchSpeechToText()
             }
 
             override fun onFinish() {
@@ -307,5 +321,45 @@ class MainActivity : AppCompatActivity() {
         val result = ContextCompat.checkSelfPermission(applicationContext, WRITE_EXTERNAL_STORAGE)
         val result1 = ContextCompat.checkSelfPermission(applicationContext, RECORD_AUDIO)
         return result == PackageManager.PERMISSION_GRANTED && result1 == PackageManager.PERMISSION_GRANTED
-    }*/
+    }
+
+   /* private fun matchSpeechToText() {
+        // on below line we are calling speech recognizer intent.
+        val intent = Intent(RecognizerIntent.ACTION_RECOGNIZE_SPEECH)
+
+        // on below line we are passing language model
+        // and model free form in our intent
+        intent.putExtra(
+            RecognizerIntent.EXTRA_LANGUAGE_MODEL,
+            RecognizerIntent.LANGUAGE_MODEL_FREE_FORM
+        )
+
+        // on below line we are passing our
+        // language as a default language.
+        intent.putExtra(
+            RecognizerIntent.EXTRA_LANGUAGE,
+            Locale.getDefault()
+        )
+
+        // on below line we are specifying a prompt
+        // message as speak to text on below line.
+        intent.putExtra(RecognizerIntent.EXTRA_PROMPT, "Speak to text")
+
+        // on below line we are specifying a try catch block.
+        // in this block we are calling a start activity
+        // for result method and passing our result code.
+        try {
+            startActivityForResult(intent, REQUEST_CODE_SPEECH_INPUT)
+        } catch (e: Exception) {
+            // on below line we are displaying error message in toast
+            Toast
+                .makeText(
+                    this@MainActivity, " " + e.message,
+                    Toast.LENGTH_SHORT
+                )
+                .show()
+        }
+    }
+
+    */
 }

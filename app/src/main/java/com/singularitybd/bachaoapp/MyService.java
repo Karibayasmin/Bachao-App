@@ -17,7 +17,15 @@ import com.sac.speech.GoogleVoiceTypingDisabledException;
 import com.sac.speech.Speech;
 import com.sac.speech.SpeechDelegate;
 import com.sac.speech.SpeechRecognitionNotAvailable;
+import com.singularitybd.bachaoapp.model.EventSpeechRecognise;
+import com.singularitybd.bachaoapp.model.ProfileData;
+import com.singularitybd.bachaoapp.preference.PreferenceUtil;
+import com.singularitybd.bachaoapp.utils.AppConstants;
 import com.tbruyelle.rxpermissions.RxPermissions;
+
+import org.greenrobot.eventbus.EventBus;
+import org.greenrobot.eventbus.Subscribe;
+import org.greenrobot.eventbus.ThreadMode;
 
 import java.util.List;
 import java.util.Objects;
@@ -29,6 +37,10 @@ public class MyService extends Service implements SpeechDelegate, Speech.stopDue
 
     @Override
     public int onStartCommand(Intent intent, int flags, int startId) {
+        if(!EventBus.getDefault().isRegistered(this)){
+            EventBus.getDefault().register(this);
+        }
+
         Log.e("enter", "enter 3");
 
         try {
@@ -83,6 +95,14 @@ public class MyService extends Service implements SpeechDelegate, Speech.stopDue
         return Service.START_STICKY;
     }
 
+    @Subscribe(threadMode = ThreadMode.MAIN)
+    public void speechRecognisedEvent(EventSpeechRecognise event){
+        if (event.isSpeechRecognised() == true){
+            Log.e("eventBus", "entered"+event.getRecognisedWord());
+        }
+
+    }
+
     @Override
     public IBinder onBind(Intent intent) {
         return null;
@@ -113,6 +133,7 @@ public class MyService extends Service implements SpeechDelegate, Speech.stopDue
         Log.d("Result", result+"");
         if (!TextUtils.isEmpty(result)) {
             Toast.makeText(this, result, Toast.LENGTH_SHORT).show();
+            EventBus.getDefault().post(new EventSpeechRecognise(true, result));
         }
     }
 
@@ -180,5 +201,9 @@ public class MyService extends Service implements SpeechDelegate, Speech.stopDue
         assert alarmManager != null;
         alarmManager.set(AlarmManager.ELAPSED_REALTIME_WAKEUP, 1000, service);
         super.onTaskRemoved(rootIntent);
+
+        if(EventBus.getDefault().isRegistered(this)){
+            EventBus.getDefault().unregister(this);
+        }
     }
 }

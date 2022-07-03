@@ -1,4 +1,4 @@
-package com.singularitybd.bachaoapp;
+package com.singularitybd.bachaoapp.utils;
 
 import android.content.ComponentName;
 import android.content.Intent;

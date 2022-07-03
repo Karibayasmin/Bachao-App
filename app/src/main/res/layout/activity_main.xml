@@ -6,20 +6,73 @@
 
     <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        tools:context="com.sac.speechdemo.MainActivity">
+        android:layout_height="match_parent">
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/textView_recognised_word"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="20dp"
+            android:text="@string/recognised_word" />
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/textView_recognised_word_times"
+            android:layout_toEndOf="@+id/textView_recognised_word"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="20dp"
+            android:text="(0)" />
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/textView_status"
+            android:layout_below="@+id/textView_recognised_word"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="20dp"
+            android:text="@string/status" />
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/textView_timer"
+            android:layout_below="@+id/textView_status"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="20dp"
+            android:text="@string/timer" />
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/textView_play_recording"
+            android:layout_below="@+id/textView_timer"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="20dp"
+            android:text="@string/play_recording" />
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/textView_stop_recording"
+            android:layout_below="@+id/textView_play_recording"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="20dp"
+            android:text="@string/stop_recording" />
 
         <Button
             android:id="@+id/btStartService"
             android:layout_width="wrap_content"
-            android:layout_centerInParent="true"
-            android:text="@string/start_service"
             android:layout_height="wrap_content"
-            />
+            android:layout_alignParentBottom="true"
+            android:layout_centerHorizontal="true"
+            android:layout_marginBottom="20dp"
+            android:text="@string/start_service" />
 
         <TextView
             android:id="@+id/tvText"
-            android:layout_below="@+id/btStartService"
+            android:layout_above="@+id/btStartService"
             android:layout_marginTop="10dp"
             android:gravity="center"
             android:visibility="gone"
@@ -30,83 +83,5 @@
             />
 
     </RelativeLayout>
-
-    <!--<RelativeLayout
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        tools:context=".MainActivity">
-
-        <TextView
-            android:id="@+id/textView_status"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="@string/status"
-            android:textAlignment="center"
-            android:textSize="18sp"
-            android:layout_marginTop="40dp"/>
-
-        <TextView
-            android:id="@+id/textView_timer"
-            android:layout_below="@+id/textView_status"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="@string/timer"
-            android:textAlignment="center"
-            android:textSize="18sp"
-            android:layout_marginTop="10dp"/>
-
-        <LinearLayout
-            android:id="@+id/layout_recording"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_centerInParent="true"
-            android:layout_marginTop="30dp"
-            android:orientation="horizontal"
-            android:weightSum="4"
-            android:gravity="center">
-
-            <TextView
-                android:id="@+id/textView_stop_recording"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_margin="5dp"
-                android:layout_weight="1"
-                android:background="@color/purple_500"
-                android:padding="5dp"
-                android:gravity="center"
-                android:text="@string/stop_recording"
-                android:textAlignment="center"
-                android:textColor="@color/white"/>
-
-            <TextView
-                android:id="@+id/textView_play_recording"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_margin="5dp"
-                android:layout_weight="1"
-                android:background="@color/purple_500"
-                android:padding="5dp"
-                android:gravity="center"
-                android:text="@string/play_recording"
-                android:textAlignment="center"
-                android:textColor="@color/white"/>
-
-            <TextView
-                android:id="@+id/textView_stop_playing"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_margin="5dp"
-                android:layout_weight="1"
-                android:background="@color/purple_500"
-                android:lines="2"
-                android:padding="5dp"
-                android:gravity="center"
-                android:text="@string/stop_playing"
-                android:textAlignment="center"
-                android:textColor="@color/white"/>
-
-        </LinearLayout>
-
-    </RelativeLayout>-->
 
 </layout>
