@@ -64,24 +64,17 @@
                     android:textColor="@color/black"
                     android:textSize="14sp" />
 
-                <androidx.appcompat.widget.AppCompatEditText
-                    android:id="@+id/editText_user_type"
+                <androidx.appcompat.widget.AppCompatSpinner
+                    android:id="@+id/userTypeSpinner"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_gravity="center_horizontal"
                     android:layout_marginStart="40dp"
                     android:layout_marginTop="10dp"
                     android:layout_marginEnd="40dp"
-                    android:background="@drawable/bg_card_view"
-                    android:hint="@string/user_type"
-                    android:maxLines="1"
                     android:paddingStart="26dp"
                     android:paddingTop="14dp"
                     android:paddingEnd="26dp"
-                    android:paddingBottom="14dp"
-                    android:singleLine="true"
-                    android:textColor="@color/black"
-                    android:textSize="14sp" />
+                    android:paddingBottom="14dp"/>
 
                 <androidx.appcompat.widget.AppCompatEditText
                     android:id="@+id/editText_is_volunteer"
