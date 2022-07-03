@@ -2,20 +2,23 @@ package com.singularitybd.bachaoapp
 
 import android.Manifest.permission.RECORD_AUDIO
 import android.Manifest.permission.WRITE_EXTERNAL_STORAGE
+import android.app.ActivityManager
 import android.content.Intent
 import android.content.pm.PackageManager
 import android.media.MediaPlayer
 import android.media.MediaRecorder
 import android.os.Bundle
 import android.os.CountDownTimer
-import android.os.Environment
 import android.speech.RecognizerIntent
 import android.util.Log
+import android.view.View
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
 import androidx.databinding.DataBindingUtil
+import com.afollestad.materialdialogs.MaterialDialog.Builder
+import com.afollestad.materialdialogs.Theme
 import com.singularitybd.bachaoapp.databinding.ActivityMainBinding
 import kotlinx.android.synthetic.main.activity_main.*
 import java.io.IOException
@@ -49,24 +52,89 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun initView(binding: ActivityMainBinding) {
-        setTimer()
+        enableAutoStart()
+        if (checkServiceRunning()) {
+            Log.e("enter", "enter 1")
+            btStartService.setText(getString(R.string.stop_service));
+            tvText.setVisibility(View.VISIBLE);
+        }
 
-        RequestPermissions()
+        btStartService.setOnClickListener { v ->
+            if (btStartService.text.toString()
+                    .equals(getString(R.string.start_service), ignoreCase = true)
+            ) {
+                Log.e("enter", "enter 2")
+
+                startService(Intent(this@MainActivity, MyService::class.java))
+                btStartService.text = getString(R.string.stop_service)
+                tvText.visibility = View.VISIBLE
+            } else {
+                Log.e("enter", "enter 2")
+
+                stopService(Intent(this@MainActivity, MyService::class.java))
+                btStartService.text = getString(R.string.start_service)
+                tvText.visibility = View.GONE
+            }
+        }
+
+        //setTimer()
+
+        //RequestPermissions()
         //startRecording()
 
-        matchSpeechToText()
+        //matchSpeechToText()
 
-        textView_play_recording.setOnClickListener {
+        /*textView_play_recording.setOnClickListener {
             playAudio()
 
         }
 
         textView_stop_recording.setOnClickListener {
             stopRecording()
+        }*/
+    }
+
+    private fun enableAutoStart() {
+        for (intent in Constants.AUTO_START_INTENTS) {
+            if (packageManager.resolveActivity(intent, PackageManager.MATCH_DEFAULT_ONLY) != null) {
+                Builder(this).title(R.string.enable_autostart)
+                    .content(R.string.ask_permission)
+                    .theme(Theme.LIGHT)
+                    .positiveText(getString(R.string.allow))
+                    .onPositive { dialog, which ->
+                        try {
+                            for (intent1 in Constants.AUTO_START_INTENTS) if (packageManager.resolveActivity(
+                                    intent1!!, PackageManager.MATCH_DEFAULT_ONLY
+                                )
+                                != null
+                            ) {
+                                startActivity(intent1)
+                                break
+                            }
+                        } catch (e: java.lang.Exception) {
+                            e.printStackTrace()
+                            Log.e("catcheMessage", "${e.message}")
+                        }
+                    }
+                    .show()
+                break
+            }
         }
     }
 
-    private fun matchSpeechToText() {
+    fun checkServiceRunning(): Boolean {
+        val manager = getSystemService(ACTIVITY_SERVICE) as ActivityManager
+        if (manager != null) {
+            for (service in manager.getRunningServices(Int.MAX_VALUE)) {
+                if (getString(R.string.my_service_name) == service.service.className) {
+                    return true
+                }
+            }
+        }
+        return false
+    }
+
+   /* private fun matchSpeechToText() {
         // on below line we are calling speech recognizer intent.
         val intent = Intent(RecognizerIntent.ACTION_RECOGNIZE_SPEECH)
 
@@ -239,5 +307,5 @@ class MainActivity : AppCompatActivity() {
         val result = ContextCompat.checkSelfPermission(applicationContext, WRITE_EXTERNAL_STORAGE)
         val result1 = ContextCompat.checkSelfPermission(applicationContext, RECORD_AUDIO)
         return result == PackageManager.PERMISSION_GRANTED && result1 == PackageManager.PERMISSION_GRANTED
-    }
+    }*/
 }

@@ -57,4 +57,17 @@ dependencies {
     implementation 'com.squareup.retrofit2:converter-gson:2.9.0'
     implementation 'com.squareup.okhttp3:logging-interceptor:4.7.2'
     implementation 'com.squareup.okhttp3:okhttp:4.7.2'
+
+    //Speech Recognizer
+    implementation 'com.github.sachinvarma:Speech-Recognizer:0.0.1'
+    implementation fileTree(dir: 'libs', include: ['*.jar'])
+    //implementation 'com.android.support:appcompat-v7:25.3.0'
+    //implementation 'com.android.support.constraint:constraint-layout:1.0.2'
+    implementation 'com.tbruyelle.rxpermissions:rxpermissions:0.7.0@aar'
+    implementation 'io.reactivex:rxandroid:1.2.1'
+    implementation 'com.afollestad.material-dialogs:core:0.9.4.2'
+    //implementation project(':speech')
+    implementation 'io.reactivex:rxjava:1.1.6'
+    implementation 'junit:junit:4.12'
+
 }
