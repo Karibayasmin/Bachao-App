@@ -29,11 +29,16 @@
         android:usesCleartextTraffic="true"
         tools:targetApi="31" >
         <activity
-            android:name=".BaseActivity"
+            android:name=".RegistrationActivity"
             android:exported="false" />
         <activity
             android:name=".activity.MainActivity"
-            android:exported="true" >
+            android:exported="false"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".activity.LoginActivity"
+            android:exported="true"
+            android:screenOrientation="portrait" >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -41,8 +46,7 @@
             </intent-filter>
         </activity>
 
-        <service android:name=".MyService" >
-        </service>
+        <service android:name=".MyService" />
     </application>
 
 </manifest>

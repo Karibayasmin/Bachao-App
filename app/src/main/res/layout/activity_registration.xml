@@ -1,0 +1,274 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <ScrollView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
+
+                <androidx.appcompat.widget.AppCompatTextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/registration"
+                    android:textColor="@color/black"
+                    android:textSize="24sp"
+                    android:layout_gravity="center"
+                    android:layout_marginTop="40dp"/>
+
+                <androidx.appcompat.widget.AppCompatEditText
+                    android:id="@+id/editText_name"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_horizontal"
+                    android:layout_marginStart="40dp"
+                    android:layout_marginTop="40dp"
+                    android:layout_marginEnd="40dp"
+                    android:background="@drawable/bg_card_view"
+                    android:hint="@string/name"
+                    android:maxLines="1"
+                    android:paddingStart="26dp"
+                    android:paddingTop="14dp"
+                    android:paddingEnd="26dp"
+                    android:paddingBottom="14dp"
+                    android:singleLine="true"
+                    android:textColor="@color/black"
+                    android:textSize="14sp" />
+
+                <androidx.appcompat.widget.AppCompatEditText
+                    android:id="@+id/editText_mobile"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_horizontal"
+                    android:layout_marginStart="40dp"
+                    android:layout_marginTop="10dp"
+                    android:layout_marginEnd="40dp"
+                    android:background="@drawable/bg_card_view"
+                    android:hint="@string/mobile_number"
+                    android:maxLines="1"
+                    android:paddingStart="26dp"
+                    android:paddingTop="14dp"
+                    android:paddingEnd="26dp"
+                    android:paddingBottom="14dp"
+                    android:singleLine="true"
+                    android:textColor="@color/black"
+                    android:textSize="14sp" />
+
+                <androidx.appcompat.widget.AppCompatEditText
+                    android:id="@+id/editText_user_type"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_horizontal"
+                    android:layout_marginStart="40dp"
+                    android:layout_marginTop="10dp"
+                    android:layout_marginEnd="40dp"
+                    android:background="@drawable/bg_card_view"
+                    android:hint="@string/user_type"
+                    android:maxLines="1"
+                    android:paddingStart="26dp"
+                    android:paddingTop="14dp"
+                    android:paddingEnd="26dp"
+                    android:paddingBottom="14dp"
+                    android:singleLine="true"
+                    android:textColor="@color/black"
+                    android:textSize="14sp" />
+
+                <androidx.appcompat.widget.AppCompatEditText
+                    android:id="@+id/editText_is_volunteer"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_horizontal"
+                    android:layout_marginStart="40dp"
+                    android:layout_marginTop="10dp"
+                    android:layout_marginEnd="40dp"
+                    android:background="@drawable/bg_card_view"
+                    android:hint="@string/isvolunteer"
+                    android:maxLines="1"
+                    android:paddingStart="26dp"
+                    android:paddingTop="14dp"
+                    android:paddingEnd="26dp"
+                    android:paddingBottom="14dp"
+                    android:singleLine="true"
+                    android:textColor="@color/black"
+                    android:textSize="14sp" />
+
+                <androidx.appcompat.widget.AppCompatEditText
+                    android:id="@+id/editText_secretWord"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_horizontal"
+                    android:layout_marginStart="40dp"
+                    android:layout_marginTop="10dp"
+                    android:layout_marginEnd="40dp"
+                    android:background="@drawable/bg_card_view"
+                    android:hint="@string/secret_word"
+                    android:maxLines="1"
+                    android:paddingStart="26dp"
+                    android:paddingTop="14dp"
+                    android:paddingEnd="26dp"
+                    android:paddingBottom="14dp"
+                    android:singleLine="true"
+                    android:textColor="@color/black"
+                    android:textSize="14sp" />
+
+                <androidx.appcompat.widget.AppCompatEditText
+                    android:id="@+id/editText_email"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_horizontal"
+                    android:layout_marginStart="40dp"
+                    android:layout_marginTop="10dp"
+                    android:layout_marginEnd="40dp"
+                    android:background="@drawable/bg_card_view"
+                    android:hint="@string/email"
+                    android:maxLines="1"
+                    android:paddingStart="26dp"
+                    android:paddingTop="14dp"
+                    android:paddingEnd="26dp"
+                    android:paddingBottom="14dp"
+                    android:singleLine="true"
+                    android:textColor="@color/black"
+                    android:textSize="14sp" />
+
+                <androidx.appcompat.widget.AppCompatEditText
+                    android:id="@+id/editText_emergency_number"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_horizontal"
+                    android:layout_marginStart="40dp"
+                    android:layout_marginTop="10dp"
+                    android:layout_marginEnd="40dp"
+                    android:background="@drawable/bg_card_view"
+                    android:hint="@string/emergency_mobile_number"
+                    android:maxLines="1"
+                    android:paddingStart="26dp"
+                    android:paddingTop="14dp"
+                    android:paddingEnd="26dp"
+                    android:paddingBottom="14dp"
+                    android:singleLine="true"
+                    android:textColor="@color/black"
+                    android:textSize="14sp" />
+
+                <androidx.appcompat.widget.AppCompatEditText
+                    android:id="@+id/editText_previous_experience"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_horizontal"
+                    android:layout_marginStart="40dp"
+                    android:layout_marginTop="10dp"
+                    android:layout_marginEnd="40dp"
+                    android:background="@drawable/bg_card_view"
+                    android:hint="@string/previous_experience"
+                    android:maxLines="1"
+                    android:paddingStart="26dp"
+                    android:paddingTop="14dp"
+                    android:paddingEnd="26dp"
+                    android:paddingBottom="14dp"
+                    android:singleLine="true"
+                    android:textColor="@color/black"
+                    android:textSize="14sp" />
+
+                <androidx.appcompat.widget.AppCompatEditText
+                    android:id="@+id/editText_occupation"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_horizontal"
+                    android:layout_marginStart="40dp"
+                    android:layout_marginTop="10dp"
+                    android:layout_marginEnd="40dp"
+                    android:background="@drawable/bg_card_view"
+                    android:hint="@string/occupation"
+                    android:maxLines="1"
+                    android:paddingStart="26dp"
+                    android:paddingTop="14dp"
+                    android:paddingEnd="26dp"
+                    android:paddingBottom="14dp"
+                    android:singleLine="true"
+                    android:textColor="@color/black"
+                    android:textSize="14sp" />
+
+                <androidx.appcompat.widget.AppCompatEditText
+                    android:id="@+id/editText_latLon"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_horizontal"
+                    android:layout_marginStart="40dp"
+                    android:layout_marginTop="10dp"
+                    android:layout_marginEnd="40dp"
+                    android:background="@drawable/bg_card_view"
+                    android:hint="@string/latitude_longitude"
+                    android:maxLines="1"
+                    android:paddingStart="26dp"
+                    android:paddingTop="14dp"
+                    android:paddingEnd="26dp"
+                    android:paddingBottom="14dp"
+                    android:singleLine="true"
+                    android:textColor="@color/black"
+                    android:textSize="14sp" />
+
+                <androidx.appcompat.widget.AppCompatEditText
+                    android:id="@+id/editText_address"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_horizontal"
+                    android:layout_marginStart="40dp"
+                    android:layout_marginTop="10dp"
+                    android:layout_marginEnd="40dp"
+                    android:background="@drawable/bg_card_view"
+                    android:hint="@string/address"
+                    android:maxLines="1"
+                    android:paddingStart="26dp"
+                    android:paddingTop="14dp"
+                    android:paddingEnd="26dp"
+                    android:paddingBottom="14dp"
+                    android:singleLine="true"
+                    android:textColor="@color/black"
+                    android:textSize="14sp" />
+
+                <androidx.appcompat.widget.AppCompatEditText
+                    android:id="@+id/editText_bloodGroup"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_horizontal"
+                    android:layout_marginStart="40dp"
+                    android:layout_marginTop="10dp"
+                    android:layout_marginEnd="40dp"
+                    android:background="@drawable/bg_card_view"
+                    android:hint="@string/blood_group"
+                    android:maxLines="1"
+                    android:paddingStart="26dp"
+                    android:paddingTop="14dp"
+                    android:paddingEnd="26dp"
+                    android:paddingBottom="14dp"
+                    android:singleLine="true"
+                    android:textColor="@color/black"
+                    android:textSize="14sp" />
+
+                <androidx.appcompat.widget.AppCompatButton
+                    android:id="@+id/button_registration"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/submit"
+                    android:textColor="@color/white"
+                    android:backgroundTint="?colorPrimary"
+                    android:layout_gravity="center"
+                    android:layout_marginTop="20dp"
+                    android:layout_marginBottom="40dp"/>
+
+            </LinearLayout>
+
+        </ScrollView>
+
+    </RelativeLayout>
+
+</layout>
