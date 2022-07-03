@@ -7,7 +7,7 @@ class EventSpeechRecognise (
     @SerializedName("isSpeechRecognised")
     var isSpeechRecognised : Boolean? = false,
 
-    @SerializedName("isSpeechRecognised")
+    @SerializedName("recognisedWord")
     var recognisedWord : String? = "",
 
 ): Serializable

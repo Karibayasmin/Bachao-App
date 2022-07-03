@@ -3,6 +3,7 @@ package com.singularitybd.bachaoapp.activity
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.telephony.emergency.EmergencyNumber
+import android.util.Log
 import android.view.View
 import android.widget.AdapterView
 import android.widget.ArrayAdapter
@@ -10,12 +11,18 @@ import android.widget.Toast
 import androidx.databinding.DataBindingUtil
 import com.singularitybd.bachaoapp.R
 import com.singularitybd.bachaoapp.databinding.ActivityRegistrationBinding
+import com.singularitybd.bachaoapp.model.EventSpeechRecognise
+import com.singularitybd.bachaoapp.model.GpsEvent
 import com.singularitybd.bachaoapp.utils.AppUtils
+import kotlinx.android.synthetic.main.activity_main.*
 import kotlinx.android.synthetic.main.activity_registration.*
 import okhttp3.MediaType.Companion.toMediaTypeOrNull
 import okhttp3.RequestBody
+import org.greenrobot.eventbus.EventBus
+import org.greenrobot.eventbus.Subscribe
+import org.greenrobot.eventbus.ThreadMode
 
-class RegistrationActivity : AppCompatActivity() {
+class RegistrationActivity : BaseActivity() {
 
     var userTypeList : ArrayList<String> = ArrayList()
 
@@ -42,9 +49,43 @@ class RegistrationActivity : AppCompatActivity() {
 
         binding.lifecycleOwner = this
 
+        initView(binding)
+    }
+
+    private fun initView(binding: ActivityRegistrationBinding) {
         setUserTypeDropDown()
 
         submitRegistration()
+    }
+
+    override fun onResume() {
+        super.onResume()
+
+        Log.e("latLong", "$latLong")
+        editText_latLon.setText(latLong)
+
+    }
+
+    @Subscribe(threadMode = ThreadMode.MAIN)
+    override fun gpsEvent(event: GpsEvent) {
+        if(event.isGpsUpdated == true){
+            editText_latLon.setText(event.latLon)
+            editText_address.setText(event.address)
+        }
+    }
+
+    override fun onStart() {
+        super.onStart()
+        if(!EventBus.getDefault().isRegistered(this)){
+            EventBus.getDefault().register(this)
+        }
+    }
+
+    override fun onStop() {
+        super.onStop()
+        if(!EventBus.getDefault().isRegistered(this)){
+            EventBus.getDefault().unregister(this)
+        }
     }
 
     private fun submitRegistration() {

@@ -24,6 +24,7 @@ import com.singularitybd.bachaoapp.R
 import com.singularitybd.bachaoapp.databinding.ActivityMainBinding
 import com.singularitybd.bachaoapp.model.EventSpeechRecognise
 import com.singularitybd.bachaoapp.preference.PreferenceUtil
+import com.singularitybd.bachaoapp.utils.AppConstants
 import com.singularitybd.bachaoapp.utils.Constants
 import kotlinx.android.synthetic.main.activity_main.*
 import org.greenrobot.eventbus.EventBus
@@ -37,9 +38,9 @@ class MainActivity : AppCompatActivity() {
 
     private lateinit var countDownTimer:CountDownTimer
 
-    private val REQUEST_AUDIO_PERMISSION_CODE = 1
+    private val REQUEST_AUDIO_PERMISSION_CODE = AppConstants.REQUEST_AUDIO_PERMISSION_CODE
 
-    private val REQUEST_CODE_SPEECH_INPUT = 2
+    private val REQUEST_CODE_SPEECH_INPUT = AppConstants.REQUEST_CODE_SPEECH_INPUT
 
     private var mFileName: String? = null
 
