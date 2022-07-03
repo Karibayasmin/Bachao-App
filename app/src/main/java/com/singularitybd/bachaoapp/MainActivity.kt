@@ -2,12 +2,14 @@ package com.singularitybd.bachaoapp
 
 import android.Manifest.permission.RECORD_AUDIO
 import android.Manifest.permission.WRITE_EXTERNAL_STORAGE
+import android.content.Intent
 import android.content.pm.PackageManager
 import android.media.MediaPlayer
 import android.media.MediaRecorder
 import android.os.Bundle
 import android.os.CountDownTimer
 import android.os.Environment
+import android.speech.RecognizerIntent
 import android.util.Log
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
@@ -17,6 +19,7 @@ import androidx.databinding.DataBindingUtil
 import com.singularitybd.bachaoapp.databinding.ActivityMainBinding
 import kotlinx.android.synthetic.main.activity_main.*
 import java.io.IOException
+import java.util.*
 
 
 class MainActivity : AppCompatActivity() {
@@ -24,6 +27,8 @@ class MainActivity : AppCompatActivity() {
     private lateinit var countDownTimer:CountDownTimer
 
     private val REQUEST_AUDIO_PERMISSION_CODE = 1
+
+    private val REQUEST_CODE_SPEECH_INPUT = 2
 
     private var mFileName: String? = null
 
@@ -47,7 +52,9 @@ class MainActivity : AppCompatActivity() {
         setTimer()
 
         RequestPermissions()
-        startRecording()
+        //startRecording()
+
+        matchSpeechToText()
 
         textView_play_recording.setOnClickListener {
             playAudio()
@@ -56,6 +63,67 @@ class MainActivity : AppCompatActivity() {
 
         textView_stop_recording.setOnClickListener {
             stopRecording()
+        }
+    }
+
+    private fun matchSpeechToText() {
+        // on below line we are calling speech recognizer intent.
+        val intent = Intent(RecognizerIntent.ACTION_RECOGNIZE_SPEECH)
+
+        // on below line we are passing language model
+        // and model free form in our intent
+        intent.putExtra(
+            RecognizerIntent.EXTRA_LANGUAGE_MODEL,
+            RecognizerIntent.LANGUAGE_MODEL_FREE_FORM
+        )
+
+        // on below line we are passing our
+        // language as a default language.
+        intent.putExtra(
+            RecognizerIntent.EXTRA_LANGUAGE,
+            Locale.getDefault()
+        )
+
+        // on below line we are specifying a prompt
+        // message as speak to text on below line.
+        intent.putExtra(RecognizerIntent.EXTRA_PROMPT, "Speak to text")
+
+        // on below line we are specifying a try catch block.
+        // in this block we are calling a start activity
+        // for result method and passing our result code.
+        try {
+            startActivityForResult(intent, REQUEST_CODE_SPEECH_INPUT)
+        } catch (e: Exception) {
+            // on below line we are displaying error message in toast
+            Toast
+                .makeText(
+                    this@MainActivity, " " + e.message,
+                    Toast.LENGTH_SHORT
+                )
+                .show()
+        }
+    }
+
+    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+        super.onActivityResult(requestCode, resultCode, data)
+
+        // in this method we are checking request
+        // code with our result code.
+        if (requestCode == REQUEST_CODE_SPEECH_INPUT) {
+            // on below line we are checking if result code is ok
+            if (resultCode == RESULT_OK && data != null) {
+
+                // in that case we are extracting the
+                // data from our array list
+                val res: ArrayList<String> =
+                    data.getStringArrayListExtra(RecognizerIntent.EXTRA_RESULTS) as ArrayList<String>
+
+                // on below line we are setting data
+                // to our output text view.
+                textView_status.setText(
+                    Objects.requireNonNull(res)[0]
+                )
+            }
         }
     }
 
@@ -100,6 +168,8 @@ class MainActivity : AppCompatActivity() {
                 val passedSeconds = difference / seconds
 
                 textView_timer.text = "$passedMinutes : $passedSeconds"
+
+                matchSpeechToText()
             }
 
             override fun onFinish() {
