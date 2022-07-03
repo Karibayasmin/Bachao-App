@@ -25,8 +25,10 @@ import org.greenrobot.eventbus.ThreadMode
 class RegistrationActivity : BaseActivity() {
 
     var userTypeList : ArrayList<String> = ArrayList()
+    var volunteerTypeList : ArrayList<String> = ArrayList()
 
     var selectedUserType : String = ""
+    var selectedVolunteerType : String = ""
 
     lateinit private var name : RequestBody
     lateinit private var mobileNumber : RequestBody
@@ -54,8 +56,35 @@ class RegistrationActivity : BaseActivity() {
 
     private fun initView(binding: ActivityRegistrationBinding) {
         setUserTypeDropDown()
+        setVolunteerTypeDropDown()
 
         submitRegistration()
+    }
+
+    private fun setVolunteerTypeDropDown() {
+        volunteerTypeList.add("Select user type")
+        volunteerTypeList.add("yes")
+        volunteerTypeList.add("no")
+        var spinnerItemAdapter: ArrayAdapter<String> =
+            ArrayAdapter(this, android.R.layout.simple_list_item_1, volunteerTypeList)
+
+        volunteerTypeSpinner.adapter = spinnerItemAdapter
+
+        volunteerTypeSpinner.setSelection(0)
+
+        volunteerTypeSpinner.onItemSelectedListener = object :
+            AdapterView.OnItemSelectedListener {
+            override fun onItemSelected(
+                parent: AdapterView<*>,
+                view: View, position: Int, id: Long
+            ) {
+                selectedVolunteerType = parent.getItemAtPosition(position).toString()
+                Toast.makeText(parent.getContext(), selectedVolunteerType , Toast.LENGTH_SHORT).show()
+            }
+
+            override fun onNothingSelected(parent: AdapterView<*>) {
+            }
+        }
     }
 
     override fun onResume() {
@@ -97,7 +126,7 @@ class RegistrationActivity : BaseActivity() {
         name = RequestBody.create("text/plain".toMediaTypeOrNull(), editText_name.text.toString())
         mobileNumber = RequestBody.create("text/plain".toMediaTypeOrNull(), editText_mobile.text.toString())
         userType = RequestBody.create("text/plain".toMediaTypeOrNull(), selectedUserType)
-        isVolunteer = RequestBody.create("text/plain".toMediaTypeOrNull(), editText_is_volunteer.text.toString())
+        isVolunteer = RequestBody.create("text/plain".toMediaTypeOrNull(), selectedVolunteerType)
         secretWord = RequestBody.create("text/plain".toMediaTypeOrNull(), editText_secretWord.text.toString())
         email = RequestBody.create("text/plain".toMediaTypeOrNull(), editText_email.text.toString())
         emergencyNumber = RequestBody.create("text/plain".toMediaTypeOrNull(), editText_emergency_number.text.toString())
