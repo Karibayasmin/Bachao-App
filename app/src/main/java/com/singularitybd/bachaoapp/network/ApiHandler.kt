@@ -2,6 +2,7 @@ package com.singularitybd.bachaoapp.network
 
 import com.singularitybd.bachaoapp.model.CommonResponse
 import com.singularitybd.bachaoapp.model.FcmSubmission
+import com.singularitybd.bachaoapp.model.Help
 import com.singularitybd.bachaoapp.model.LoginResponse
 import com.singularitybd.bachaoapp.utils.EndPoints
 import okhttp3.MultipartBody
@@ -26,5 +27,9 @@ interface ApiHandler {
     // Submit FCM
     @POST(EndPoints.API_POST_FCM)
     fun submitFcm(@Body fcmSubmission: FcmSubmission): Call<CommonResponse>?
+
+    // Submit FCM
+    @POST(EndPoints.API_POST_HELP)
+    fun submitHelpRequest(@Body help: Help): Call<CommonResponse>?
 
 }

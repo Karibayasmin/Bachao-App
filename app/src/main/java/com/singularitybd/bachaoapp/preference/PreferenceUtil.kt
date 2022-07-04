@@ -47,9 +47,15 @@ object PreferenceUtil {
         return preferences.getString(AppConstants.SHARED_USER_SECRET_WORD, "") ?: ""
     }
 
+    fun getUserId(context: Context) : Int {
+        val preferences = getSharedPreference(context)
+        return preferences.getInt(AppConstants.SHARED_USER_ID, 0)
+    }
+
     fun saveUserData(context: Context, userProfile: ProfileData) {
         val editor = getSharedPreference(context).edit()
         editor.putString(AppConstants.SHARED_USER_SECRET_WORD, userProfile.secretWord ?: "")
+        editor.putInt(AppConstants.SHARED_USER_ID, userProfile.id ?: 0)
         editor.apply()
     }
 

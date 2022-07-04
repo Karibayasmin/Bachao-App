@@ -48,7 +48,7 @@ object FirebaseHandler {
             return
         }
 
-        val fcmSubmission = FcmSubmission(preferences.getString(AppConstants.FCM_TOKEN, "").toString())
+        val fcmSubmission = FcmSubmission(preferences.getString(AppConstants.FCM_TOKEN, "").toString(), PreferenceUtil.getUserId(context))
 
         val call = ApiClient
             .getInstance(PreferenceUtil.getAccessToken(context))

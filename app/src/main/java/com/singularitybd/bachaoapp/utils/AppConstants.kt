@@ -9,6 +9,7 @@ object AppConstants {
     const val SHARED_USER_SECRET_WORD = "SECRET_WORD"
     const val SHARED_ACCESS_TOKEN = "ACCESS_TOKEN"
     const val SHARED_IS_LOGGED_IN = "IS_LOGGED_IN"
+    const val SHARED_USER_ID = "SHARED_USER_ID"
 
     /*MainActivity*/
     const val REQUEST_AUDIO_PERMISSION_CODE = 1

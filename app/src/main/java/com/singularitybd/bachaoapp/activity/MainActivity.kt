@@ -17,16 +17,23 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
 import androidx.databinding.DataBindingUtil
+import androidx.lifecycle.Observer
+import androidx.lifecycle.ViewModelProvider
 import com.afollestad.materialdialogs.MaterialDialog.Builder
 import com.afollestad.materialdialogs.Theme
 import com.singularitybd.bachaoapp.MyService
 import com.singularitybd.bachaoapp.R
 import com.singularitybd.bachaoapp.databinding.ActivityMainBinding
+import com.singularitybd.bachaoapp.model.CommonResponse
 import com.singularitybd.bachaoapp.model.EventSpeechRecognise
+import com.singularitybd.bachaoapp.model.GpsEvent
 import com.singularitybd.bachaoapp.preference.PreferenceUtil
 import com.singularitybd.bachaoapp.utils.AppConstants
+import com.singularitybd.bachaoapp.utils.AppUtils
 import com.singularitybd.bachaoapp.utils.Constants
+import com.singularitybd.bachaoapp.viewmodel.MainActivityViewModel
 import kotlinx.android.synthetic.main.activity_main.*
+import kotlinx.android.synthetic.main.activity_registration.*
 import org.greenrobot.eventbus.EventBus
 import org.greenrobot.eventbus.Subscribe
 import org.greenrobot.eventbus.ThreadMode
@@ -34,7 +41,7 @@ import java.io.IOException
 import java.util.*
 
 
-class MainActivity : AppCompatActivity() {
+class MainActivity : BaseActivity() {
 
     private lateinit var countDownTimer:CountDownTimer
 
@@ -50,10 +57,13 @@ class MainActivity : AppCompatActivity() {
 
     var recognisedTime : Int = 0
 
+    lateinit var mainActivityViewModel : MainActivityViewModel
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         //setContentView(R.layout.activity_main)
 
+        mainActivityViewModel = ViewModelProvider(this).get(MainActivityViewModel::class.java)
         val binding = DataBindingUtil.setContentView<ActivityMainBinding>(this,
             R.layout.activity_main
         )
@@ -70,10 +80,11 @@ class MainActivity : AppCompatActivity() {
         if (checkServiceRunning()) {
             Log.e("enter", "enter 1")
             btStartService.setText(getString(R.string.stop_service));
-            tvText.setVisibility(View.VISIBLE);
+            //tvText.setVisibility(View.VISIBLE);
         }
 
         btStartService.setOnClickListener { v ->
+
             if (btStartService.text.toString()
                     .equals(getString(R.string.start_service), ignoreCase = true)
             ) {
@@ -81,19 +92,17 @@ class MainActivity : AppCompatActivity() {
 
                 startService(Intent(this@MainActivity, MyService::class.java))
                 btStartService.text = getString(R.string.stop_service)
-                tvText.visibility = View.VISIBLE
+                //tvText.visibility = View.VISIBLE
             } else {
                 Log.e("enter", "enter 2")
 
                 stopService(Intent(this@MainActivity, MyService::class.java))
                 btStartService.text = getString(R.string.start_service)
-                tvText.visibility = View.GONE
+                //tvText.visibility = View.GONE
             }
         }
 
         RequestPermissions()
-
-        //matchSpeechToText()
 
         textView_play_recording.setOnClickListener {
             playAudio()
@@ -103,10 +112,52 @@ class MainActivity : AppCompatActivity() {
         textView_stop_recording.setOnClickListener {
             stopRecording()
         }
+
+        textView_off_audio.setOnClickListener {
+            stopAudio()
+        }
+
+        imageView_seek_help.setOnClickListener {
+            setTimer()
+            startRecording()
+            submitHelpSeek()
+        }
+    }
+
+    private fun submitHelpSeek() {
+        if (!AppUtils.hasNetworkConnection(this)) {
+            AppUtils.showToast(this, getString(R.string.no_internet), false)
+            return
+        }
+
+        if(isValid()){
+            textView_volunteer_status.visibility = View.VISIBLE
+
+            mainActivityViewModel.sentHelpRequest(this, current_lat_lon.text.trim().toString(), PreferenceUtil.getUserId(this)).observe(this, object : Observer<CommonResponse>{
+                override fun onChanged(data: CommonResponse) {
+                    if(data.responseCode == 200){
+                        textView_volunteer_status.text = "Request sent successfully to volunteers"
+                    }else{
+                        submitHelpSeek()
+                    }
+                }
+
+            })
+
+        }
+    }
+
+    fun isValid() : Boolean{
+        if(current_lat_lon.text.toString() == "current Location syncing..."){
+            AppUtils.showToast(this, "wait for lat lon", false)
+            return false
+        }
+
+        return true
     }
 
     private fun fetchRecognisedWord() {
-        if(textView_recognised_word.text.toString().toLowerCase() == "hello"){
+        if(textView_recognised_word.text.toString().toLowerCase() == PreferenceUtil.getUserSecretWord(this)){
             recognisedTime++
 
             Log.e("recognisedTime","$recognisedTime")
@@ -116,9 +167,11 @@ class MainActivity : AppCompatActivity() {
             if(recognisedTime == 2){
                 setTimer()
                 startRecording()
+                submitHelpSeek()
 
                 recognisedTime = 0
-                textView_recognised_word.text = ""
+                textView_recognised_word.text = "Voice Recognised Successfully"
+                textView_recognised_word_times.text = ""
             }
         }
     }
@@ -130,6 +183,14 @@ class MainActivity : AppCompatActivity() {
             textView_recognised_word.text = event.recognisedWord
 
             fetchRecognisedWord()
+        }
+    }
+
+    @Subscribe(threadMode = ThreadMode.MAIN)
+    override fun gpsEvent(event: GpsEvent) {
+        if(event.isGpsUpdated == true){
+
+            current_lat_lon.text = event.latLon
         }
     }
 
@@ -203,7 +264,7 @@ class MainActivity : AppCompatActivity() {
 
                 // on below line we are setting data
                 // to our output text view.
-                textView_status.setText(
+                textView_recognised_word.setText(
                     Objects.requireNonNull(res)[0]
                 )
             }
@@ -236,6 +297,24 @@ class MainActivity : AppCompatActivity() {
         }
     }
 
+    private fun stopAudio() {
+        mPlayer = MediaPlayer()
+
+        try {
+            if(mFileName != null){
+                mPlayer?.setDataSource(mFileName)
+
+                mPlayer?.prepare()
+
+                mPlayer?.stop()
+                textView_status.text = "Audio Play off"
+            }
+
+        }catch (e : IOException){
+            Log.e("TAG", "prepare() failed ${e.message}")
+        }
+    }
+
     fun setTimer() {
 
         countDownTimer = object : CountDownTimer(60000, 1000) {
@@ -258,6 +337,7 @@ class MainActivity : AppCompatActivity() {
             override fun onFinish() {
                 textView_timer.text = "0:00"
                 stopRecording()
+                textView_off_audio.visibility = View.VISIBLE
             }
         }.start()
     }
@@ -324,7 +404,7 @@ class MainActivity : AppCompatActivity() {
         return result == PackageManager.PERMISSION_GRANTED && result1 == PackageManager.PERMISSION_GRANTED
     }
 
-   /* private fun matchSpeechToText() {
+    private fun matchSpeechToText() {
         // on below line we are calling speech recognizer intent.
         val intent = Intent(RecognizerIntent.ACTION_RECOGNIZE_SPEECH)
 
@@ -359,8 +439,11 @@ class MainActivity : AppCompatActivity() {
                     Toast.LENGTH_SHORT
                 )
                 .show()
+
+            /*textView_recognised_word.text = event.recognisedWord
+
+            fetchRecognisedWord()*/
         }
     }
 
-    */
 }
