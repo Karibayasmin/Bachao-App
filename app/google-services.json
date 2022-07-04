@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "889295251937",
+    "project_id": "black-box-728f8",
+    "storage_bucket": "black-box-728f8.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:889295251937:android:fbd36524365cbb0fc30aa0",
+        "android_client_info": {
+          "package_name": "com.singularitybd.bachaoapp"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "889295251937-n2q371rimlelj3r7h291d539kb6k1uij.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDM9barRn0G9sPcTGZrQGLQqLu4hxDlVGs"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "889295251937-n2q371rimlelj3r7h291d539kb6k1uij.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

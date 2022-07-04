@@ -65,5 +65,9 @@
     <string name="enter_blood_group">Please enter blood group</string>
     <string name="enter_password">Please enter password</string>
     <string name="is_volunteer">Is volunteer?</string>
+    
+    
+    <!--push notification-->
+    <string name="common_pushNotification_body">"You have a new notification"</string>
 
 </resources>
