@@ -4,6 +4,12 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools">
 
+    <data>
+        <variable
+            name="viewModel"
+            type="com.singularitybd.bachaoapp.viewmodel.RegistrationViewModel" />
+    </data>
+
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent">
@@ -46,7 +52,7 @@
                     android:textSize="14sp" />
 
                 <androidx.appcompat.widget.AppCompatEditText
-                    android:id="@+id/editText_mobile"
+                    android:id="@+id/editText_email"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center_horizontal"
@@ -54,7 +60,7 @@
                     android:layout_marginTop="10dp"
                     android:layout_marginEnd="40dp"
                     android:background="@drawable/bg_card_view"
-                    android:hint="@string/mobile_number"
+                    android:hint="@string/email"
                     android:maxLines="1"
                     android:paddingStart="26dp"
                     android:paddingTop="14dp"
@@ -108,7 +114,7 @@
                     android:paddingBottom="14dp"/>
 
                 <androidx.appcompat.widget.AppCompatEditText
-                    android:id="@+id/editText_email"
+                    android:id="@+id/editText_mobile"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center_horizontal"
@@ -116,7 +122,7 @@
                     android:layout_marginTop="10dp"
                     android:layout_marginEnd="40dp"
                     android:background="@drawable/bg_card_view"
-                    android:hint="@string/email"
+                    android:hint="@string/mobile_number"
                     android:maxLines="1"
                     android:paddingStart="26dp"
                     android:paddingTop="14dp"
@@ -231,6 +237,26 @@
                     android:layout_marginEnd="40dp"
                     android:background="@drawable/bg_card_view"
                     android:hint="@string/blood_group"
+                    android:maxLines="1"
+                    android:paddingStart="26dp"
+                    android:paddingTop="14dp"
+                    android:paddingEnd="26dp"
+                    android:paddingBottom="14dp"
+                    android:singleLine="true"
+                    android:textColor="@color/black"
+                    android:textSize="14sp" />
+
+                <androidx.appcompat.widget.AppCompatEditText
+                    android:id="@+id/editText_password"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_horizontal"
+                    android:layout_marginStart="40dp"
+                    android:layout_marginTop="10dp"
+                    android:layout_marginEnd="40dp"
+                    android:background="@drawable/bg_card_view"
+                    android:hint="@string/password"
+                    android:inputType="textPassword"
                     android:maxLines="1"
                     android:paddingStart="26dp"
                     android:paddingTop="14dp"

@@ -2,7 +2,7 @@ package com.singularitybd.bachaoapp.utils
 
 object AppConstants {
     /*For network*/
-    const val BASE_URL = ""
+    const val BASE_URL = "http://104.248.159.155/api/v1/"
 
     /*For shared preference*/
     const val SHARED_TABLE_NAME = "SHOHAY"

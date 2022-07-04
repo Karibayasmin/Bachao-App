@@ -12,6 +12,8 @@
     <string name="enable_autostart">Enable AutoStart</string>
     <string name="my_service_name">com.sac.speechdemo.MyService</string>
     <string name="please_wait">Please wait</string>
+    <string name="common_success">Operation Successful</string>
+    <string name="common_error">Operation Failed</string>
 
     <!--MainActivity-->
     <string name="timer">timer</string>
@@ -39,7 +41,7 @@
     <string name="secret_word">Secret Word</string>
     <string name="email">Email</string>
     <string name="emergency_mobile_number">Emergency Mobile Number</string>
-    <string name="previous_experience">Previous Experience</string>
+    <string name="previous_experience">Previous Volunteer Experience</string>
     <string name="occupation">Occupation</string>
     <string name="latitude_longitude">Latitude Longitude</string>
     <string name="division">Division</string>
@@ -47,5 +49,21 @@
     <string name="upazila">Upazila</string>
     <string name="address">Address</string>
     <string name="blood_group">Blood Group</string>
+    <string name="enter_name">Please enter name</string>
+    <string name="enter_mobile_number">Please enter mobile_number</string>
+    <string name="select_user_type">Select user type</string>
+    <string name="please_select_user_type">Please select user type</string>
+    <string name="enter_secret_word">Please enter secret word</string>
+    <string name="select_is_volunteer">Please select are you volunteer or not</string>
+    <string name="enter_email">Please enter email</string>
+    <string name="enter_emergency_mobile_number">Please enter emergency mobile number</string>
+    <string name="enter_previous_experience">Please enter role of previous volunteer experience</string>
+    <string name="enter_occupation">Please enter occupation</string>
+    <string name="check_internet_for_sync">Can not sync because of no internet</string>
+    <string name="syncing_lat_lon">Please wait, Syncing your current LatLon from gps</string>
+    <string name="syncing_address">Please wait, Syncing your current address from gps</string>
+    <string name="enter_blood_group">Please enter blood group</string>
+    <string name="enter_password">Please enter password</string>
+    <string name="is_volunteer">Is volunteer?</string>
 
 </resources>
