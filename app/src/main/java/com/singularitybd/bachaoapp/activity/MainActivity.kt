@@ -113,12 +113,12 @@ class MainActivity : BaseActivity() {
             stopRecording()
         }
 
-        textView_off_audio.setOnClickListener {
+        /*textView_off_audio.setOnClickListener {
             stopAudio()
-        }
+        }*/
 
         imageView_seek_help.setOnClickListener {
-            setTimer()
+            //setTimer()
             startRecording()
             submitHelpSeek()
         }
@@ -165,7 +165,7 @@ class MainActivity : BaseActivity() {
             textView_recognised_word_times.text = "($recognisedTime)"
 
             if(recognisedTime == 2){
-                setTimer()
+                //setTimer()
                 startRecording()
                 submitHelpSeek()
 
@@ -191,6 +191,7 @@ class MainActivity : BaseActivity() {
         if(event.isGpsUpdated == true){
 
             current_lat_lon.text = event.latLon
+            current_address.text = event.address
         }
     }
 
@@ -337,7 +338,7 @@ class MainActivity : BaseActivity() {
             override fun onFinish() {
                 textView_timer.text = "0:00"
                 stopRecording()
-                textView_off_audio.visibility = View.VISIBLE
+                //textView_off_audio.visibility = View.VISIBLE
             }
         }.start()
     }

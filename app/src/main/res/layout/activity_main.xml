@@ -58,7 +58,7 @@
             android:layout_marginTop="20dp"
             android:text="@string/play_recording" />
 
-        <androidx.appcompat.widget.AppCompatTextView
+        <!--<androidx.appcompat.widget.AppCompatTextView
             android:id="@+id/textView_off_audio"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -66,13 +66,13 @@
             android:layout_centerHorizontal="true"
             android:layout_marginTop="10dp"
             android:text="Stop Audio Recording"
-            android:visibility="gone"/>
+            android:visibility="gone"/>-->
 
         <androidx.appcompat.widget.AppCompatTextView
             android:id="@+id/textView_stop_recording"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_below="@+id/textView_off_audio"
+            android:layout_below="@+id/textView_play_recording"
             android:layout_centerHorizontal="true"
             android:layout_marginTop="20dp"
             android:text="@string/stop_recording" />
@@ -85,6 +85,15 @@
             android:layout_centerHorizontal="true"
             android:layout_marginBottom="20dp"
             android:text="@string/start_service" />
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/current_address"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_above="@+id/current_lat_lon"
+            android:layout_centerHorizontal="true"
+            android:textColor="?colorPrimary"
+            android:textStyle="bold" />
 
         <androidx.appcompat.widget.AppCompatTextView
             android:id="@+id/current_lat_lon"

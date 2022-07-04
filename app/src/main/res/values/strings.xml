@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">BachaoApp</string>
+    <string name="app_name">Shohay</string>
 
     <!--Common String-->
     <string name="permission_required">Please grant the permission to use the microphone</string>
